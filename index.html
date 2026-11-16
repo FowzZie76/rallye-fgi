@@ -1,0 +1,29 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Guide Rallye FGI - Le livre</title>
+<style>
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:#232819;color:#E9E1C8;font:600 13px/1.2 'Courier New',monospace;display:flex;flex-direction:column;overflow:hidden}
+.bar{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:8px 12px;background:#353B2B;border-bottom:3px solid #D9A441}
+.bar b{letter-spacing:.08em}.grp{display:flex;gap:6px;flex-wrap:wrap}
+button{font:700 12px/1 'Courier New',monospace;letter-spacing:.04em;text-transform:uppercase;padding:9px 12px;border:1px solid #D9A441;background:transparent;color:#E9E1C8;cursor:pointer;min-height:40px}
+button:hover,button:focus-visible{background:#D9A441;color:#232819;outline:none}
+#stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:10px}
+#book{width:100%;height:100%}#stage{position:relative}.pg{background:#E2D9BF;overflow:hidden}.pg img{width:100%;height:100%;display:block;object-fit:fill;user-select:none;-webkit-user-drag:none}
+#ind{min-width:110px;text-align:center}
+.hint{font-weight:400;opacity:.8}
+</style></head><body>
+<div class="bar"><b>RALLYE FGI - 2e RIMa</b>
+<div class="grp"><button data-p="0">Couverture</button><button data-p="2">Sommaire</button><button data-p="3">Étape 1</button><button data-p="13">Étape 2</button></div>
+<div class="grp"><button id="prev" aria-label="Page précédente">&larr;</button><span id="ind">1 / 40</span><button id="next" aria-label="Page suivante">&rarr;</button></div></div>
+<div id="stage"><div id="book"><div class="pg"><img src="pages/p01.jpg" alt="Page 1" draggable="false"></div><div class="pg"><img src="pages/p02.jpg" alt="Page 2" draggable="false"></div><div class="pg"><img src="pages/p03.jpg" alt="Page 3" draggable="false"></div><div class="pg"><img src="pages/p04.jpg" alt="Page 4" draggable="false"></div><div class="pg"><img src="pages/p05.jpg" alt="Page 5" draggable="false"></div><div class="pg"><img src="pages/p06.jpg" alt="Page 6" draggable="false"></div><div class="pg"><img src="pages/p07.jpg" alt="Page 7" draggable="false"></div><div class="pg"><img src="pages/p08.jpg" alt="Page 8" draggable="false"></div><div class="pg"><img src="pages/p09.jpg" alt="Page 9" draggable="false"></div><div class="pg"><img src="pages/p10.jpg" alt="Page 10" draggable="false"></div><div class="pg"><img src="pages/p11.jpg" alt="Page 11" draggable="false"></div><div class="pg"><img src="pages/p12.jpg" alt="Page 12" draggable="false"></div><div class="pg"><img src="pages/p13.jpg" alt="Page 13" draggable="false"></div><div class="pg"><img src="pages/p14.jpg" alt="Page 14" draggable="false"></div><div class="pg"><img src="pages/p15.jpg" alt="Page 15" draggable="false"></div><div class="pg"><img src="pages/p16.jpg" alt="Page 16" draggable="false"></div><div class="pg"><img src="pages/p17.jpg" alt="Page 17" draggable="false"></div><div class="pg"><img src="pages/p18.jpg" alt="Page 18" draggable="false"></div><div class="pg"><img src="pages/p19.jpg" alt="Page 19" draggable="false"></div><div class="pg"><img src="pages/p20.jpg" alt="Page 20" draggable="false"></div><div class="pg"><img src="pages/p21.jpg" alt="Page 21" draggable="false"></div><div class="pg"><img src="pages/p22.jpg" alt="Page 22" draggable="false"></div><div class="pg"><img src="pages/p23.jpg" alt="Page 23" draggable="false"></div><div class="pg"><img src="pages/p24.jpg" alt="Page 24" draggable="false"></div><div class="pg"><img src="pages/p25.jpg" alt="Page 25" draggable="false"></div><div class="pg"><img src="pages/p26.jpg" alt="Page 26" draggable="false"></div><div class="pg"><img src="pages/p27.jpg" alt="Page 27" draggable="false"></div><div class="pg"><img src="pages/p28.jpg" alt="Page 28" draggable="false"></div><div class="pg"><img src="pages/p29.jpg" alt="Page 29" draggable="false"></div><div class="pg"><img src="pages/p30.jpg" alt="Page 30" draggable="false"></div><div class="pg"><img src="pages/p31.jpg" alt="Page 31" draggable="false"></div><div class="pg"><img src="pages/p32.jpg" alt="Page 32" draggable="false"></div><div class="pg"><img src="pages/p33.jpg" alt="Page 33" draggable="false"></div><div class="pg"><img src="pages/p34.jpg" alt="Page 34" draggable="false"></div><div class="pg"><img src="pages/p35.jpg" alt="Page 35" draggable="false"></div><div class="pg"><img src="pages/p36.jpg" alt="Page 36" draggable="false"></div><div class="pg"><img src="pages/p37.jpg" alt="Page 37" draggable="false"></div><div class="pg"><img src="pages/p38.jpg" alt="Page 38" draggable="false"></div><div class="pg"><img src="pages/p39.jpg" alt="Page 39" draggable="false"></div><div class="pg"><img src="pages/p40.jpg" alt="Page 40" draggable="false"></div></div></div>
+<script src="page-flip.browser.js"></script>
+<script>
+var pf=new St.PageFlip(document.getElementById('book'),{width:550,height:777,size:'stretch',minWidth:260,maxWidth:900,minHeight:370,maxHeight:1270,showCover:true,maxShadowOpacity:.5,mobileScrollSupport:false,flippingTime:700});
+pf.loadFromHTML(document.querySelectorAll('.pg'));
+var ind=document.getElementById('ind');
+function upd(){var i=pf.getCurrentPageIndex(),n=pf.getPageCount();ind.textContent=(i+1)+' / '+n}
+pf.on('flip',upd);pf.on('init',upd);upd();
+document.getElementById('prev').onclick=function(){pf.flipPrev()};
+document.getElementById('next').onclick=function(){pf.flipNext()};
+document.querySelectorAll('[data-p]').forEach(function(b){b.onclick=function(){pf.flip(+b.dataset.p)}});
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight')pf.flipNext();if(e.key==='ArrowLeft')pf.flipPrev()});
+</script></body></html>
