@@ -7,7 +7,7 @@ body{background:#232819;color:#E9E1C8;font:600 13px/1.2 'Courier New',monospace;
 button{font:700 12px/1 'Courier New',monospace;letter-spacing:.04em;text-transform:uppercase;padding:9px 12px;border:1px solid #D9A441;background:transparent;color:#E9E1C8;cursor:pointer;min-height:40px}
 button:hover,button:focus-visible{background:#D9A441;color:#232819;outline:none}
 #stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:10px}
-#book{width:100%;height:100%}#stage{position:relative}.pg{background:#E2D9BF;overflow:hidden}.pg img{width:100%;height:100%;display:block;object-fit:fill;user-select:none;-webkit-user-drag:none}
+#book{width:100%;height:100%;transition:transform .5s ease}#stage{position:relative}.pg{background:#E2D9BF;overflow:hidden}.pg img{width:100%;height:100%;display:block;object-fit:fill;user-select:none;-webkit-user-drag:none}
 #ind{min-width:110px;text-align:center}
 .hint{font-weight:400;opacity:.8}
 </style></head><body>
@@ -20,8 +20,13 @@ button:hover,button:focus-visible{background:#D9A441;color:#232819;outline:none}
 var pf=new St.PageFlip(document.getElementById('book'),{width:550,height:777,size:'stretch',minWidth:260,maxWidth:900,minHeight:370,maxHeight:1270,showCover:true,maxShadowOpacity:.5,mobileScrollSupport:false,flippingTime:700});
 pf.loadFromHTML(document.querySelectorAll('.pg'));
 var ind=document.getElementById('ind');
-function upd(){var i=pf.getCurrentPageIndex(),n=pf.getPageCount();ind.textContent=(i+1)+' / '+n}
-pf.on('flip',upd);pf.on('init',upd);upd();
+var book=document.getElementById('book');
+function center(i){var n=pf.getPageCount(),x=0;
+if(pf.getOrientation()==='landscape'){var w=pf.getBoundsRect().pageWidth/2;if(i===0)x=-w;else if(i>=n-1&&n%2===0)x=w}
+book.style.transform='translateX('+x+'px)'}
+function upd(){var i=pf.getCurrentPageIndex(),n=pf.getPageCount();ind.textContent=(i+1)+' / '+n;center(i)}
+pf.on('flip',upd);pf.on('init',upd);pf.on('changeOrientation',upd);window.addEventListener('resize',function(){setTimeout(upd,50)});
+pf.on('changeState',function(e){if(e.data==='flipping'||e.data==='user_fold')book.style.transform='translateX(0)';else if(e.data==='read')upd()});upd();
 document.getElementById('prev').onclick=function(){pf.flipPrev()};
 document.getElementById('next').onclick=function(){pf.flipNext()};
 document.querySelectorAll('[data-p]').forEach(function(b){b.onclick=function(){pf.flip(+b.dataset.p)}});
